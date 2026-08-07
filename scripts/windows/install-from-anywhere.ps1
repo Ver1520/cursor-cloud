@@ -113,7 +113,8 @@ if (-not (Test-IsAdmin)) {
     if ($PSCommandPath -and (Test-Path -LiteralPath $PSCommandPath)) {
         Copy-Item -LiteralPath $PSCommandPath -Destination $tempScript -Force
     } else {
-        $url = "https://raw.githubusercontent.com/Ver1520/cursor-cloud/cursor/folder-context-menu-cursor-7614/scripts/windows/install-from-anywhere.ps1"
+        # Pin commit SHA to avoid raw.githubusercontent.com branch cache serving stale script
+        $url = "https://raw.githubusercontent.com/Ver1520/cursor-cloud/7eb83a8e3999d7d22ca51d67556a8589b21901b5/scripts/windows/install-from-anywhere.ps1"
         $bytes = (Invoke-WebRequest -Uri $url -UseBasicParsing).Content
         # Write UTF-8 BOM so Windows PowerShell parses correctly
         $utf8Bom = New-Object System.Text.UTF8Encoding $true
