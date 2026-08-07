@@ -48,7 +48,7 @@ function Find-CursorExecutable {
 }
 
 function Get-MenuLabel {
-    # Chinese: "用 Cursor 打开" via codepoints (encoding-safe)
+    # Menu text via codepoints (encoding-safe for WinPS)
     return (
         [string][char]0x7528 +
         " Cursor " +
