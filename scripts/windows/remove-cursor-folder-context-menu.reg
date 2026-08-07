@@ -1,0 +1,6 @@
+Windows Registry Editor Version 5.00
+
+; 移除文件夹右键菜单中的「用 Cursor 打开」
+
+[-HKEY_CURRENT_USER\Software\Classes\Directory\shell\OpenWithCursor]
+[-HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\OpenWithCursor]

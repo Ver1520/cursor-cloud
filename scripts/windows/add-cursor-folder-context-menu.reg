@@ -1,0 +1,21 @@
+Windows Registry Editor Version 5.00
+
+; 为文件夹右键菜单添加「用 Cursor 打开」
+; 使用前请将 YOUR_USERNAME 替换为你的 Windows 用户名
+; 推荐优先使用 add-cursor-folder-context-menu.ps1（会自动检测 Cursor 路径）
+
+; 右键点击文件夹
+[HKEY_CURRENT_USER\Software\Classes\Directory\shell\OpenWithCursor]
+@="用 Cursor 打开"
+"Icon"="C:\\Users\\YOUR_USERNAME\\AppData\\Local\\Programs\\cursor\\Cursor.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Directory\shell\OpenWithCursor\command]
+@="\"C:\\Users\\YOUR_USERNAME\\AppData\\Local\\Programs\\cursor\\Cursor.exe\" \"%1\""
+
+; 在文件夹空白处右键
+[HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\OpenWithCursor]
+@="用 Cursor 打开"
+"Icon"="C:\\Users\\YOUR_USERNAME\\AppData\\Local\\Programs\\cursor\\Cursor.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\OpenWithCursor\command]
+@="\"C:\\Users\\YOUR_USERNAME\\AppData\\Local\\Programs\\cursor\\Cursor.exe\" \"%V\""

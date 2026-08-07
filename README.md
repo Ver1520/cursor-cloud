@@ -20,6 +20,7 @@
 | --- | --- |
 | `.cursor/environment.json` | Cloud Agent 环境安装命令（可后续改为 snapshot / Dockerfile） |
 | `AGENTS.md` | 给 Agent 的仓库级指令（含 Cloud 专用说明） |
+| `scripts/windows/` | Windows 文件夹右键「用 Cursor 打开」脚本与注册表文件 |
 
 参考文档：
 
