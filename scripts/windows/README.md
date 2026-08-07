@@ -2,18 +2,34 @@
 
 在 Windows 资源管理器中，仅在**文件夹内空白处**右键时显示「用 Cursor 打开」。
 
-## Win10 一键安装（推荐）
+## 最快方式：任意目录一键安装（推荐）
 
-1. 进入 `scripts\windows` 目录
+1. **右键开始菜单 → Windows PowerShell（管理员）**
+2. 粘贴并回车：
+
+```powershell
+irm https://raw.githubusercontent.com/Ver1520/cursor-cloud/cursor/folder-context-menu-cursor-7614/scripts/windows/install-from-anywhere.ps1 | iex
+```
+
+3. UAC 点「是」
+4. 进入任意文件夹，在**空白处**右键验证
+
+> 不要在 `C:\Windows\system32` 下执行 `cd scripts\windows`，脚本不在系统目录里。
+
+## 本地仓库安装
+
+若已克隆本仓库：
+
+1. 进入仓库里的 `scripts\windows`（注意是仓库路径，不是 system32）
 2. **双击** `install-context-menu.cmd`
-3. 在 UAC 提示中点击「是」（需要管理员权限）
-4. 安装完成后：**双击进入任意文件夹**，在右侧空白处右键验证
+3. UAC 点「是」
 
 ## 手动安装（PowerShell）
 
 ```powershell
 # 必须以管理员身份打开 PowerShell
-cd scripts\windows
+# 先 cd 到你的仓库路径，例如：
+cd D:\你的路径\cursor-cloud\scripts\windows
 Set-ExecutionPolicy -Scope Process Bypass -Force
 .\add-cursor-folder-context-menu.ps1
 ```
