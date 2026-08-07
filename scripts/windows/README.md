@@ -5,14 +5,21 @@
 ## 最快方式：任意目录一键安装（推荐）
 
 1. **右键开始菜单 → Windows PowerShell（管理员）**
-2. 粘贴并回车：
+2. 粘贴并回车（两行一起复制）：
 
 ```powershell
+Set-ExecutionPolicy -Scope Process Bypass -Force
 irm https://raw.githubusercontent.com/Ver1520/cursor-cloud/cursor/folder-context-menu-cursor-7614/scripts/windows/install-from-anywhere.ps1 | iex
 ```
 
 3. UAC 点「是」
 4. 进入任意文件夹，在**空白处**右键验证
+
+若仍提示「禁止运行脚本」，用这一条替代（同样管理员）：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/Ver1520/cursor-cloud/cursor/folder-context-menu-cursor-7614/scripts/windows/install-from-anywhere.ps1 | iex"
+```
 
 > 不要在 `C:\Windows\system32` 下执行 `cd scripts\windows`，脚本不在系统目录里。
 
