@@ -1,56 +1,77 @@
 # Windows：文件夹空白处右键「用 Cursor 打开」
 
-在 Windows 资源管理器中，仅在**文件夹内空白处**右键时显示「用 Cursor 打开」（不会在选中某个文件夹时的右键菜单中出现）。
+在 Windows 资源管理器中，仅在**文件夹内空白处**右键时显示「用 Cursor 打开」。
 
-## 推荐方式（PowerShell，自动检测 Cursor 路径）
+## Win10 一键安装（推荐）
 
-1. 打开 **PowerShell**（无需管理员）
-2. 进入本目录并执行：
+1. 进入 `scripts\windows` 目录
+2. **双击** `install-context-menu.cmd`
+3. 在 UAC 提示中点击「是」（需要管理员权限）
+4. 安装完成后：**双击进入任意文件夹**，在右侧空白处右键验证
+
+## 手动安装（PowerShell）
 
 ```powershell
+# 必须以管理员身份打开 PowerShell
+cd scripts\windows
 Set-ExecutionPolicy -Scope Process Bypass -Force
 .\add-cursor-folder-context-menu.ps1
 ```
 
-若 Cursor 不在默认安装位置，可指定路径：
+若 Cursor 不在默认路径：
 
 ```powershell
 .\add-cursor-folder-context-menu.ps1 -CursorPath "D:\Apps\Cursor\Cursor.exe"
 ```
 
-## 备选方式（.reg 注册表文件）
+## 菜单没出现？先运行诊断
 
-1. 用记事本打开 `add-cursor-folder-context-menu.reg`
-2. 将所有 `YOUR_USERNAME` 替换为你的 Windows 用户名
-3. 双击该 `.reg` 文件并确认合并
+```powershell
+.\diagnose-cursor-context-menu.ps1
+```
+
+### Win10 常见问题
+
+| 问题 | 解决 |
+| --- | --- |
+| 未以管理员安装 | Win10 需写入 `HKCR`，请用 `install-context-menu.cmd` 或管理员 PowerShell |
+| 右键位置不对 | 必须**进入文件夹内部**，在文件列表空白处右键 |
+| 安装后未刷新 | 脚本会自动重启资源管理器；仍无效则注销重登 |
+| 找不到 Cursor | 用 `-CursorPath` 指定 `Cursor.exe` 完整路径 |
+
+### 正确测试方式
+
+```
+此电脑 → 打开 D:\某个项目文件夹 → 在右侧空白处右键 → 应出现「用 Cursor 打开」
+```
+
+以下位置**不会**出现该菜单：
+- 在文件夹图标上右键（那是选中文件夹的菜单）
+- 在桌面空白处右键
+- 在「此电脑」根目录空白处右键
+
+## 备选：.reg 注册表文件
+
+1. 编辑 `add-cursor-folder-context-menu.reg`，替换 `YOUR_USERNAME`
+2. **右键 → 合并**（需管理员确认）
+3. 重启资源管理器或注销
 
 ## 移除
 
-PowerShell：
+双击 `install-context-menu.cmd` 同目录下，以管理员运行：
 
 ```powershell
-Set-ExecutionPolicy -Scope Process Bypass -Force
 .\remove-cursor-folder-context-menu.ps1
 ```
 
 或双击 `remove-cursor-folder-context-menu.reg`。
 
-## 使用效果
-
-| 操作 | 效果 |
-| --- | --- |
-| 在文件夹内空白处右键 | 用 Cursor 打开当前文件夹 |
-| 右键点击某个文件夹图标/名称 | 不出现该菜单项 |
-
-## Windows 11 说明
-
-Windows 11 默认使用精简右键菜单，自定义项可能出现在 **「显示更多选项」** 中。若需恢复经典完整菜单，可参考 [Microsoft 文档](https://learn.microsoft.com/en-us/answers/questions/2287432/article-restore-old-right-click-context-menu-in-wi)。
-
 ## 文件说明
 
 | 文件 | 说明 |
 | --- | --- |
-| `add-cursor-folder-context-menu.ps1` | 添加菜单（推荐） |
-| `remove-cursor-folder-context-menu.ps1` | 移除菜单 |
-| `add-cursor-folder-context-menu.reg` | 注册表添加（需手动改用户名） |
-| `remove-cursor-folder-context-menu.reg` | 注册表移除 |
+| `install-context-menu.cmd` | Win10 一键安装（推荐） |
+| `add-cursor-folder-context-menu.ps1` | 安装脚本 |
+| `diagnose-cursor-context-menu.ps1` | 诊断脚本 |
+| `remove-cursor-folder-context-menu.ps1` | 移除脚本 |
+| `*.reg` | 注册表导入备选 |
