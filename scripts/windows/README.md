@@ -9,7 +9,7 @@
 
 ```powershell
 Set-ExecutionPolicy -Scope Process Bypass -Force
-irm https://raw.githubusercontent.com/Ver1520/cursor-cloud/7eb83a8e3999d7d22ca51d67556a8589b21901b5/scripts/windows/install-from-anywhere.ps1 | iex
+irm https://raw.githubusercontent.com/Ver1520/cursor-cloud/8dcc00644e5f7c04343b5415b1cc60dae55e706e/scripts/windows/install-from-anywhere.ps1 | iex
 ```
 
 3. UAC 点「是」
@@ -18,7 +18,7 @@ irm https://raw.githubusercontent.com/Ver1520/cursor-cloud/7eb83a8e3999d7d22ca51
 若仍提示「禁止运行脚本」，用这一条替代（同样管理员）：
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/Ver1520/cursor-cloud/7eb83a8e3999d7d22ca51d67556a8589b21901b5/scripts/windows/install-from-anywhere.ps1 | iex"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/Ver1520/cursor-cloud/8dcc00644e5f7c04343b5415b1cc60dae55e706e/scripts/windows/install-from-anywhere.ps1 | iex"
 ```
 
 > 不要在 `C:\Windows\system32` 下执行 `cd scripts\windows`，脚本不在系统目录里。
