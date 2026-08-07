@@ -1,6 +1,6 @@
-# Windows：文件夹右键「用 Cursor 打开」
+# Windows：文件夹空白处右键「用 Cursor 打开」
 
-在 Windows 资源管理器中，为**文件夹**右键菜单添加「用 Cursor 打开」。
+在 Windows 资源管理器中，仅在**文件夹内空白处**右键时显示「用 Cursor 打开」（不会在选中某个文件夹时的右键菜单中出现）。
 
 ## 推荐方式（PowerShell，自动检测 Cursor 路径）
 
@@ -39,8 +39,8 @@ Set-ExecutionPolicy -Scope Process Bypass -Force
 
 | 操作 | 效果 |
 | --- | --- |
-| 右键点击文件夹 | 用 Cursor 打开该文件夹 |
 | 在文件夹内空白处右键 | 用 Cursor 打开当前文件夹 |
+| 右键点击某个文件夹图标/名称 | 不出现该菜单项 |
 
 ## Windows 11 说明
 

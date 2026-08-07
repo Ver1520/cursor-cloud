@@ -1,4 +1,4 @@
-# 为 Windows 文件夹右键菜单添加「用 Cursor 打开」
+# 为 Windows 文件夹空白处右键菜单添加「用 Cursor 打开」
 # 用法：在 PowerShell 中执行
 #   Set-ExecutionPolicy -Scope Process Bypass -Force; .\add-cursor-folder-context-menu.ps1
 
@@ -30,28 +30,27 @@ if (-not $CursorPath -or -not (Test-Path $CursorPath)) {
 $cursorExe = (Resolve-Path $CursorPath).Path
 $menuLabel = "用 Cursor 打开"
 $shellKey = "OpenWithCursor"
+$keyPath = "HKCU:\Software\Classes\Directory\Background\shell\$shellKey"
 
-# 使用 HKCU，无需管理员权限
-$menuEntries = @(
-    @{ Path = "HKCU:\Software\Classes\Directory\shell\$shellKey"; Arg = "%1" },
-    @{ Path = "HKCU:\Software\Classes\Directory\Background\shell\$shellKey"; Arg = "%V" }
-)
+# 仅注册文件夹空白处右键（Directory\Background），不包含选中文件夹时的菜单
+New-Item -Path $keyPath -Force | Out-Null
+Set-ItemProperty -Path $keyPath -Name "(Default)" -Value $menuLabel
+Set-ItemProperty -Path $keyPath -Name "Icon" -Value "$cursorExe,0"
 
-foreach ($entry in $menuEntries) {
-    $keyPath = $entry.Path
-    New-Item -Path $keyPath -Force | Out-Null
-    Set-ItemProperty -Path $keyPath -Name "(Default)" -Value $menuLabel
-    Set-ItemProperty -Path $keyPath -Name "Icon" -Value "$cursorExe,0"
+$commandKey = Join-Path $keyPath "command"
+New-Item -Path $commandKey -Force | Out-Null
+Set-ItemProperty -Path $commandKey -Name "(Default)" -Value "`"$cursorExe`" `"%V`""
 
-    $commandKey = Join-Path $keyPath "command"
-    New-Item -Path $commandKey -Force | Out-Null
-    Set-ItemProperty -Path $commandKey -Name "(Default)" -Value "`"$cursorExe`" `"$($entry.Arg)`""
+# 若之前添加过「选中文件夹」菜单，一并清理
+$legacyKey = "HKCU:\Software\Classes\Directory\shell\$shellKey"
+if (Test-Path $legacyKey) {
+    Remove-Item -Path $legacyKey -Recurse -Force
 }
 
-Write-Host "已成功添加文件夹右键菜单项：$menuLabel" -ForegroundColor Green
+Write-Host "已成功添加文件夹空白处右键菜单项：$menuLabel" -ForegroundColor Green
 Write-Host "Cursor 路径：$cursorExe"
 Write-Host ""
 Write-Host "说明：" -ForegroundColor Yellow
-Write-Host "  - 右键点击文件夹 → 用 Cursor 打开"
-Write-Host "  - 在文件夹空白处右键 → 用 Cursor 打开当前文件夹"
+Write-Host "  - 在文件夹内空白处右键 → 用 Cursor 打开当前文件夹"
+Write-Host "  - 不会在「选中文件夹」的右键菜单中出现"
 Write-Host "  - Windows 11 可能需点击「显示更多选项」才能看到该菜单项"
